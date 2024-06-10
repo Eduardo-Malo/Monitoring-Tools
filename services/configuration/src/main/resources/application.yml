@@ -1,0 +1,22 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: monitoring-tools-configuration
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/configuration?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Application Specific part.
+application:
+  max-configurations: 5
