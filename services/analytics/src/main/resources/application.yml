@@ -1,0 +1,18 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: monitoring-tools-analytics
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/analytics?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

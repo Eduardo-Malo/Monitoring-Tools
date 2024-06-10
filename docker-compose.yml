@@ -17,7 +17,7 @@ services:
     networks:
       - monitoring-tools-network
   configuration_db:
-    container_name: postgres_container
+    container_name: postgres_configuration_container
     image: postgres
     restart: always
     environment:
@@ -26,6 +26,20 @@ services:
       POSTGRES_PASSWORD: admin
     ports:
       - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - monitoring-tools-network
+  analytics_db:
+    container_name: postgres_analytics_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: analytics
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
