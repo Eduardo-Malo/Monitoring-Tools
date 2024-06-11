@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class Analytics {
     private String jobName;
     private String errorMessage;
     @NotNull(message = "responseTime should be present")
-    private Instant responseTime;
+    private Long responseTime;
     @NotNull(message = "result should be present")
     private Boolean result;
     @NotNull(message = "responseCode should be present")
@@ -35,6 +34,4 @@ public class Analytics {
     @PastOrPresent
     @NotNull(message = "createdAt should be present")
     private LocalDateTime createdAt;
-    @PastOrPresent
-    private LocalDateTime modifiedAt;
 }
