@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: monitoring-tools-monitor
+
+client:
+  url:
+    configuration-server: http://localhost:8070/api/v1
+    analytics-server: http://localhost:8071/api/v1
