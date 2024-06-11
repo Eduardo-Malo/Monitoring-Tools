@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record AnalyticsResponse(
         Integer id,
+        Integer jobId,
         String jobName,
+        String uri,
         String errorMessage,
         Long responseTime,
         Boolean result,

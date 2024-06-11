@@ -7,10 +7,16 @@ import jakarta.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public record AnalyticsRequest(
+        @NotNull(message = "jobId should be present")
+        Integer jobId,
         @NotNull(message = "jobName should be present")
         @NotEmpty(message = "jobName should be present")
         @NotBlank(message = "jobName should be present")
         String jobName,
+        @NotNull(message = "uri should be present")
+        @NotEmpty(message = "uri should be present")
+        @NotBlank(message = "uri should be present")
+        String uri,
         String errorMessage,
         @NotNull(message = "responseTime should be present")
         Long responseTime,

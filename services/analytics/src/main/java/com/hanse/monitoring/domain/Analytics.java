@@ -22,8 +22,12 @@ public class Analytics {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotNull(message = "jobId should be present")
+    private Integer jobId;
     @NotEmpty(message = "jobName should be present")
     private String jobName;
+    @NotEmpty(message = "uri should be present")
+    private String uri;
     private String errorMessage;
     @NotNull(message = "responseTime should be present")
     private Long responseTime;

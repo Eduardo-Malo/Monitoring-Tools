@@ -16,7 +16,9 @@ public class AnalyticsMapper {
             return null;
         }
         return Analytics.builder()
+                        .jobId(request.jobId())
                         .jobName(request.jobName())
+                        .uri(request.uri())
                         .errorMessage(request.errorMessage())
                         .responseTime(request.responseTime())
                         .result(request.result())
@@ -36,7 +38,9 @@ public class AnalyticsMapper {
         }
         return new AnalyticsResponse(
                 analytics.getId(),
+                analytics.getJobId(),
                 analytics.getJobName(),
+                analytics.getUri(),
                 analytics.getErrorMessage(),
                 analytics.getResponseTime(),
                 analytics.getResult(),
