@@ -1,0 +1,6 @@
+server:
+  port: 8072
+
+spring:
+  application:
+    name: monitoring-tools-monitor
