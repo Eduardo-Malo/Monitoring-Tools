@@ -1,6 +1,6 @@
-package com.hanse.analytics.controller;
+package com.hanse.monitoring.controller;
 
-import com.hanse.analytics.service.AnalyticsService;
+import com.hanse.monitoring.service.AnalyticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

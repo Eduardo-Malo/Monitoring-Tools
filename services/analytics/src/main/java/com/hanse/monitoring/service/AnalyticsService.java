@@ -1,9 +1,9 @@
-package com.hanse.analytics.service;
+package com.hanse.monitoring.service;
 
-import com.hanse.analytics.controller.AnalyticsMapper;
-import com.hanse.analytics.controller.AnalyticsRequest;
-import com.hanse.analytics.controller.AnalyticsResponse;
-import com.hanse.analytics.repository.AnalyticsRepository;
+import com.hanse.monitoring.controller.AnalyticsMapper;
+import com.hanse.monitoring.controller.AnalyticsRequest;
+import com.hanse.monitoring.controller.AnalyticsResponse;
+import com.hanse.monitoring.repository.AnalyticsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

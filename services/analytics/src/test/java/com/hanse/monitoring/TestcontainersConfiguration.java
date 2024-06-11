@@ -1,4 +1,4 @@
-package com.hanse.analytics;
+package com.hanse.monitoring;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

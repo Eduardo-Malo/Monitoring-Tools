@@ -1,6 +1,6 @@
-package com.hanse.analytics.controller;
+package com.hanse.monitoring.controller;
 
-import com.hanse.analytics.domain.Analytics;
+import com.hanse.monitoring.domain.Analytics;
 import org.springframework.stereotype.Component;
 
 @Component

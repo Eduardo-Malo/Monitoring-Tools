@@ -1,4 +1,4 @@
-package com.hanse.analytics.handler;
+package com.hanse.monitoring.handler;
 
 import java.util.Map;
 

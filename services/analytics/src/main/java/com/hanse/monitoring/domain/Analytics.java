@@ -1,4 +1,4 @@
-package com.hanse.analytics.domain;
+package com.hanse.monitoring.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

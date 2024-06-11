@@ -1,4 +1,4 @@
-package com.hanse.analytics.controller;
+package com.hanse.monitoring.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

@@ -1,12 +1,10 @@
-package com.hanse.analytics;
+package com.hanse.monitoring;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 
-@Import(TestcontainersConfiguration.class)
 @SpringBootTest
-class AnalyticsApplicationTests {
+class MonitorApplicationTests {
 
     @Test
     void contextLoads() {
