@@ -35,7 +35,7 @@ class ConfigurationControllerTest {
 
     @Test
     void testCreateConfiguration_Success() throws Exception {
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1, true);
         int configurationId = 1;
         when(configurationService.createConfiguration(any(ConfigurationRequest.class)))
                 .thenReturn(configurationId);
@@ -52,7 +52,7 @@ class ConfigurationControllerTest {
 
     @Test
     void testCreateConfiguration_ValidationError() throws Exception {
-        ConfigurationRequest request = new ConfigurationRequest("", "", -1);
+        ConfigurationRequest request = new ConfigurationRequest("", "", -1, true);
 
         mockMvc.perform(post("/api/v1/configurations")
                        .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class ConfigurationControllerTest {
 
     @Test
     void testCreateConfiguration_MaxConfigurationsExceeded() throws Exception {
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1, true);
 
         when(configurationService.createConfiguration(any(ConfigurationRequest.class)))
                 .thenThrow(new MaxConfigurationsException("Maximum number of configurations exceeded"));
@@ -85,7 +85,7 @@ class ConfigurationControllerTest {
 
     @Test
     void testUpdateConfiguration_Success() throws Exception {
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1, true);
         int configurationId = 1;
         when(configurationService.updateConfiguration(any(Integer.class), any(ConfigurationRequest.class)))
                 .thenReturn(true);
@@ -102,7 +102,7 @@ class ConfigurationControllerTest {
 
     @Test
     void testUpdateConfiguration_EntityNotFound() throws Exception {
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 1, true);
         int configurationId = 1;
         when(configurationService.updateConfiguration(any(Integer.class), any(ConfigurationRequest.class)))
                 .thenThrow(new EntityNotFoundException("Configuration not found"));
@@ -117,8 +117,8 @@ class ConfigurationControllerTest {
 
     @Test
     void testFindAll_Success() throws Exception {
-        ConfigurationResponse response1 = new ConfigurationResponse(1, "name1", "uri1", 1);
-        ConfigurationResponse response2 = new ConfigurationResponse(2, "name2", "uri2", 3);
+        ConfigurationResponse response1 = new ConfigurationResponse(1, "name1", "uri1", 1, true);
+        ConfigurationResponse response2 = new ConfigurationResponse(2, "name2", "uri2", 3, true);
         List<ConfigurationResponse> responses = Arrays.asList(response1, response2);
         when(configurationService.findAllConfigurations()).thenReturn(responses);
 
@@ -165,7 +165,7 @@ class ConfigurationControllerTest {
     @Test
     void testFindById_Success() throws Exception {
         int configurationId = 1;
-        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 1);
+        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 1, true);
         when(configurationService.findById(configurationId)).thenReturn(response);
 
         mockMvc.perform(get("/api/v1/configurations/{configuration-id}", configurationId))

@@ -31,21 +31,21 @@ class ConfigurationValidationTest {
 
     private static Stream<Arguments> provideInvalidConfigurations() {
         return Stream.of(
-                Arguments.of(new Configuration(null, "", "uri", 10, LocalDateTime.now(), null), "name should be present"),
-                Arguments.of(new Configuration(null, "name", "", 10, LocalDateTime.now(), null), "uri should be present"),
-                Arguments.of(new Configuration(null, "name", "uri", null, LocalDateTime.now(), null), "interval should be present"),
-                Arguments.of(new Configuration(null, "name", "uri", -1, LocalDateTime.now(), null), "must be greater than or equal to 0"),
-                Arguments.of(new Configuration(null, "name", "uri", 86401, LocalDateTime.now(), null), "must be less than or equal to 86400"),
-                Arguments.of(new Configuration(null, "name", "uri", 10, null, null), "createdAt should be present"),
-                Arguments.of(new Configuration(null, "name", "uri", 10, LocalDateTime.now().plusDays(1), null), "must be a date in the past or in the present")
+                Arguments.of(new Configuration(null, "", "uri", 10, true, LocalDateTime.now(), null), "name should be present"),
+                Arguments.of(new Configuration(null, "name", "", 10, true, LocalDateTime.now(), null), "uri should be present"),
+                Arguments.of(new Configuration(null, "name", "uri", null, true, LocalDateTime.now(), null), "interval should be present"),
+                Arguments.of(new Configuration(null, "name", "uri", -1, true, LocalDateTime.now(), null), "must be greater than or equal to 0"),
+                Arguments.of(new Configuration(null, "name", "uri", 86401, true, LocalDateTime.now(), null), "must be less than or equal to 86400"),
+                Arguments.of(new Configuration(null, "name", "uri", 10, true, null, null), "createdAt should be present"),
+                Arguments.of(new Configuration(null, "name", "uri", 10, true, LocalDateTime.now().plusDays(1), null), "must be a date in the past or in the present")
         );
     }
 
     private static Stream<Arguments> provideValidConfigurations() {
         return Stream.of(
-                Arguments.of(new Configuration(null, "name1", "uri1", 0, LocalDateTime.now(), null)),
-                Arguments.of(new Configuration(null, "name2", "uri2", 86400, LocalDateTime.now(), null)),
-                Arguments.of(new Configuration(null, "name3", "uri3", 10, LocalDateTime.now(), null))
+                Arguments.of(new Configuration(null, "name1", "uri1", 0, true, LocalDateTime.now(), null)),
+                Arguments.of(new Configuration(null, "name2", "uri2", 86400, true, LocalDateTime.now(), null)),
+                Arguments.of(new Configuration(null, "name3", "uri3", 10, true, LocalDateTime.now(), null))
         );
     }
 

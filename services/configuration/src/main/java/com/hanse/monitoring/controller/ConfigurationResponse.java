@@ -7,6 +7,7 @@ public record ConfigurationResponse(
         Integer id,
         String name,
         String uri,
-        Integer interval
+        Integer interval,
+        Boolean active
 ) {
 }

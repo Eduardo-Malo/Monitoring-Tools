@@ -70,6 +70,11 @@ public class ConfigurationService {
             configuration.setInterval(request.interval());
             updated = true;
         }
+
+        if (request.active() != null) {
+            configuration.setActive(request.active());
+            updated = true;
+        }
         return updated;
     }
 

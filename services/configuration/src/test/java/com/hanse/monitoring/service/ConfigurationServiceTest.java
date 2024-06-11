@@ -55,15 +55,15 @@ class ConfigurationServiceTest {
 
     private static Stream<Arguments> provideCreateConfigurationRequests() {
         return Stream.of(
-                Arguments.of(new ConfigurationRequest("name1", "uri1", 10), 1),
-                Arguments.of(new ConfigurationRequest("name2", "uri2", 20), 2)
+                Arguments.of(new ConfigurationRequest("name1", "uri1", 10, true), 1),
+                Arguments.of(new ConfigurationRequest("name2", "uri2", 20, true), 2)
         );
     }
 
     private static Stream<Arguments> provideUpdateConfigurationRequests() {
         return Stream.of(
-                Arguments.of(new ConfigurationRequest("newName1", "newUri1", 10), 1),
-                Arguments.of(new ConfigurationRequest("newName2", "newUri2", 20), 2)
+                Arguments.of(new ConfigurationRequest("newName1", "newUri1", 10, true), 1),
+                Arguments.of(new ConfigurationRequest("newName2", "newUri2", 20, true), 2)
         );
     }
 
@@ -88,7 +88,7 @@ class ConfigurationServiceTest {
     void createConfiguration_ShouldThrowException_WhenMaxConfigurationsReached() {
         when(repository.count()).thenReturn(maxConfigurations.longValue());
 
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 10);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 10, true);
 
         MaxConfigurationsException exception = assertThrows(MaxConfigurationsException.class, () ->
                 service.createConfiguration(request));
@@ -125,7 +125,7 @@ class ConfigurationServiceTest {
     void updateConfiguration_ShouldThrowException_WhenConfigurationNotFound() {
         when(repository.findById(1)).thenReturn(Optional.empty());
 
-        ConfigurationRequest request = new ConfigurationRequest("newName", "newUri", 20);
+        ConfigurationRequest request = new ConfigurationRequest("newName", "newUri", 20, true);
 
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () ->
             service.updateConfiguration(1, request));
@@ -139,7 +139,7 @@ class ConfigurationServiceTest {
     @Test
     void findAllConfigurations_ShouldReturnConfigurationList() {
         Configuration configuration = new Configuration();
-        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 10);
+        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 10, true);
 
         when(repository.findAll()).thenReturn(List.of(configuration));
         when(mapper.fromConfiguration(configuration)).thenReturn(response);
@@ -155,7 +155,7 @@ class ConfigurationServiceTest {
     @Test
     void findById_ShouldReturnConfigurationResponse() {
         Configuration configuration = new Configuration();
-        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 10);
+        ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 10, true);
 
         when(repository.findById(1)).thenReturn(Optional.of(configuration));
         when(mapper.fromConfiguration(configuration)).thenReturn(response);

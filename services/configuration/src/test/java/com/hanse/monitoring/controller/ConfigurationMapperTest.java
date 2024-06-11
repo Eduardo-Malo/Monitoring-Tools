@@ -11,7 +11,7 @@ class ConfigurationMapperTest {
 
     @Test
     void toConfiguration_ShouldMapRequestToEntity() {
-        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 10);
+        ConfigurationRequest request = new ConfigurationRequest("name", "uri", 10, true);
 
         Configuration configuration = mapper.toConfiguration(request);
 

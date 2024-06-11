@@ -20,6 +20,7 @@ public class ConfigurationMapper {
                             .name(request.name())
                             .uri(request.uri())
                             .interval(request.interval())
+                            .active(request.active() == null || request.active())
                             .build();
     }
 
@@ -37,7 +38,8 @@ public class ConfigurationMapper {
                 configuration.getId(),
                 configuration.getName(),
                 configuration.getUri(),
-                configuration.getInterval()
+                configuration.getInterval(),
+                configuration.getActive()
         );
     }
 }

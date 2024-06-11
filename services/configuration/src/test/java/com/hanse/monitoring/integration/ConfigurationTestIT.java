@@ -60,11 +60,11 @@ class ConfigurationTestIT {
     @BeforeEach
     public void setUp() {
         restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        request = new ConfigurationRequest("name", "uri", 1);
-        ResponseEntity<Integer> response = restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name1", "uri1", 1), Integer.class);
+        request = new ConfigurationRequest("name", "uri", 1, true);
+        ResponseEntity<Integer> response = restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name1", "uri1", 1, true), Integer.class);
         configurationId = response.getBody();
-        restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name2", "uri2", 1), Integer.class);
-        restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name3", "uri3", 1), Integer.class);
+        restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name2", "uri2", 1, true), Integer.class);
+        restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name3", "uri3", 1, true), Integer.class);
     }
 
     @AfterEach
@@ -107,7 +107,7 @@ class ConfigurationTestIT {
         return result;
     }
 
-    public Integer countConfigurations() {
+    private Integer countConfigurations() {
         String sql = "SELECT COUNT(*) FROM configuration";
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
@@ -125,7 +125,7 @@ class ConfigurationTestIT {
 
     @Test
     void testCreateConfigurationFailValidation() {
-        ConfigurationRequest badRequest = new ConfigurationRequest("", "",-1 );
+        ConfigurationRequest badRequest = new ConfigurationRequest("", "",-1, true);
         ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(getRootUrl(), badRequest, ErrorResponse.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -143,7 +143,7 @@ class ConfigurationTestIT {
     @Test
     void testCreateConfigurationFailMaxNumberConfigurations() {
         for (int i = 0; i < maxConfigurations-3; i++) {
-            restTemplate.postForEntity(getRootUrl(), request, Integer.class);
+            restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name"+i+100, "uri"+i+100, 1, true), Integer.class);
         }
 
         ResponseEntity<String> response = restTemplate.postForEntity(getRootUrl(), request, String.class);
@@ -215,7 +215,4 @@ class ConfigurationTestIT {
                 () -> assertEquals(String.format("No configuration found with the provided ID: %s", configurationId), Objects.requireNonNull(response2.getBody()).get("message"))
         );
     }
-
-
-
 }

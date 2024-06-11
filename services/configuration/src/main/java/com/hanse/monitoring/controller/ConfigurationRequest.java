@@ -20,6 +20,7 @@ public record ConfigurationRequest(
         @NotNull(message = "interval should be present", groups = OnCreate.class)
         @Min(groups = {OnCreate.class, OnUpdate.class}, value = 0)
         @Max(groups = {OnCreate.class, OnUpdate.class}, value = 86400)
-        Integer interval
+        Integer interval,
+        Boolean active
 ) {
 }
