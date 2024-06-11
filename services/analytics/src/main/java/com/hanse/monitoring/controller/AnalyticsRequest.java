@@ -19,7 +19,7 @@ public record AnalyticsRequest(
         String uri,
         String errorMessage,
         @NotNull(message = "responseTime should be present")
-        Long responseTime,
+        Double responseTime,
         @NotNull(message = "result should be present")
         Boolean result,
         @NotNull(message = "responseCode should be present")

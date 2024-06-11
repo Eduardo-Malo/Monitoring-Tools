@@ -11,7 +11,7 @@ public record AnalyticsResponse(
         String jobName,
         String uri,
         String errorMessage,
-        Long responseTime,
+        Double responseTime,
         Boolean result,
         Integer responseCode,
         LocalDateTime createdAt

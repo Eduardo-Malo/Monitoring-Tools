@@ -30,7 +30,7 @@ public class Analytics {
     private String uri;
     private String errorMessage;
     @NotNull(message = "responseTime should be present")
-    private Long responseTime;
+    private Double responseTime;
     @NotNull(message = "result should be present")
     private Boolean result;
     @NotNull(message = "responseCode should be present")
