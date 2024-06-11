@@ -89,3 +89,9 @@ Sservices/analytics/src/test/java/com/hanse/analytics/AnalyticsApplicationTests.
 Rservices/analytics/src/test/java/com/hanse/analytics/TestAnalyticsApplication.java,5\d\5d6e3ef968265c83b752458cb097f4d4c41a36c0
 …
 Uservices/analytics/src/test/java/com/hanse/analytics/TestcontainersConfiguration.java,0\1\0180eea37dcd5eb70d284a0fba33d39069e48698
+{
+Kservices/monitor/src/main/java/com/hanse/monitoring/MonitorApplication.java,4\c\4c94527ec4ee34935ac43840317202443840390d
+€
+Pservices/monitor/src/main/java/com/hanse/monitoring/config/RestClientConfig.java,3\1\31f0b053c49d8512377491c553b71e2c260c6a41
+p
+@services/monitor/src/main/java/com/hanse/monitoring/Startup.java,b\7\b7b25c1302a73976738760553af3f6ed0f62b7cd

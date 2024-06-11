@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/services/analytics/analytics/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/analytics/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/configuration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/monitor/src/main/java" charset="UTF-8" />
   </component>
 </project>
