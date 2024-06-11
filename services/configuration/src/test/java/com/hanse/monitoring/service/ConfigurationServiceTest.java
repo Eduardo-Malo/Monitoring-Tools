@@ -80,21 +80,21 @@ class ConfigurationServiceTest {
 
         assertNotNull(id);
         assertEquals(configurationId, id);
-        verify(repository, times(1)).count();
+        verify(repository, times(1)).findByActive(true);
         verify(repository, times(1)).save(configuration);
     }
 
     @Test
     void createConfiguration_ShouldThrowException_WhenMaxConfigurationsReached() {
-        when(repository.count()).thenReturn(maxConfigurations.longValue());
+        when(repository.findByActive(true)).thenReturn(List.of(new Configuration(), new Configuration(), new Configuration(), new Configuration(), new Configuration()));
 
         ConfigurationRequest request = new ConfigurationRequest("name", "uri", 10, true);
 
         MaxConfigurationsException exception = assertThrows(MaxConfigurationsException.class, () ->
                 service.createConfiguration(request));
 
-        assertEquals(String.format("Maximum number of %d configurations reached", maxConfigurations), exception.getMsg());
-        verify(repository, times(1)).count();
+        assertEquals(String.format("Maximum number of %d active configurations reached", maxConfigurations), exception.getMsg());
+        verify(repository, times(1)).findByActive(true);
         verify(repository, never()).save(any());
     }
 
@@ -141,15 +141,15 @@ class ConfigurationServiceTest {
         Configuration configuration = new Configuration();
         ConfigurationResponse response = new ConfigurationResponse(1, "name", "uri", 10, true);
 
-        when(repository.findAll()).thenReturn(List.of(configuration));
+        when(repository.findByActive(true)).thenReturn(List.of(configuration));
         when(mapper.fromConfiguration(configuration)).thenReturn(response);
 
-        List<ConfigurationResponse> configurations = service.findAllConfigurations();
+        List<ConfigurationResponse> configurations = service.findAllConfigurations(true);
 
         assertNotNull(configurations);
         assertEquals(1, configurations.size());
         assertEquals(response, configurations.getFirst());
-        verify(repository, times(1)).findAll();
+        verify(repository, times(1)).findByActive(true);
     }
 
     @Test

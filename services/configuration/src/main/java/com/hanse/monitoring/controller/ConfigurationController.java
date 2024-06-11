@@ -30,8 +30,8 @@ public class ConfigurationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ConfigurationResponse>> findAll() {
-        return ResponseEntity.ok(this.service.findAllConfigurations());
+    public ResponseEntity<List<ConfigurationResponse>> findAll(@RequestParam(required = false) Boolean active) {
+        return ResponseEntity.ok(this.service.findAllConfigurations(active));
     }
 
     @GetMapping("/{configuration-id}")

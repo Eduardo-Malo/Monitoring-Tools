@@ -120,9 +120,9 @@ class ConfigurationControllerTest {
         ConfigurationResponse response1 = new ConfigurationResponse(1, "name1", "uri1", 1, true);
         ConfigurationResponse response2 = new ConfigurationResponse(2, "name2", "uri2", 3, true);
         List<ConfigurationResponse> responses = Arrays.asList(response1, response2);
-        when(configurationService.findAllConfigurations()).thenReturn(responses);
+        when(configurationService.findAllConfigurations(true)).thenReturn(responses);
 
-        mockMvc.perform(get("/api/v1/configurations"))
+        mockMvc.perform(get("/api/v1/configurations?active=true"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$", hasSize(2)))
@@ -135,31 +135,31 @@ class ConfigurationControllerTest {
                .andExpect(jsonPath("$[1].uri", is("uri2")))
                .andExpect(jsonPath("$[1].interval", is(3)));
 
-        verify(configurationService, times(1)).findAllConfigurations();
+        verify(configurationService, times(1)).findAllConfigurations(true);
     }
 
     @Test
     void testFindAll_NoConfigurations() throws Exception {
-        when(configurationService.findAllConfigurations()).thenReturn(Collections.emptyList());
+        when(configurationService.findAllConfigurations(true)).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/configurations"))
+        mockMvc.perform(get("/api/v1/configurations?active=true"))
                .andExpect(status().isOk())
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$", hasSize(0)));
 
-        verify(configurationService, times(1)).findAllConfigurations();
+        verify(configurationService, times(1)).findAllConfigurations(true);
     }
 
     @Test
     void testFindAll_InternalServerError() throws Exception {
-        when(configurationService.findAllConfigurations()).thenThrow(new RuntimeException("Unexpected error"));
+        when(configurationService.findAllConfigurations(true)).thenThrow(new RuntimeException("Unexpected error"));
 
-        mockMvc.perform(get("/api/v1/configurations"))
+        mockMvc.perform(get("/api/v1/configurations?active=true"))
                .andExpect(status().isInternalServerError())
                .andExpect(content().contentType(MediaType.TEXT_PLAIN))
                .andExpect(content().string("Unexpected error"));
 
-        verify(configurationService, times(1)).findAllConfigurations();
+        verify(configurationService, times(1)).findAllConfigurations(true);
     }
 
     @Test

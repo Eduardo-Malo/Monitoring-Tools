@@ -27,7 +27,9 @@ public class ConfigurationService {
 
     @Transactional
     public Integer createConfiguration(ConfigurationRequest request) {
-        validateMaxConfigurations();
+        if (Boolean.TRUE.equals(request.active())) {
+            validateMaxActiveConfigurations();
+        }
         var configuration = mapper.toConfiguration(request);
         configuration.setCreatedAt(LocalDateTime.now());
         this.repository.save(configuration);
@@ -35,11 +37,11 @@ public class ConfigurationService {
         return configuration.getId();
     }
 
-    private void validateMaxConfigurations() {
-        long count = this.repository.count();
+    private void validateMaxActiveConfigurations() {
+        long count = this.repository.findByActive(true).size();
         if (count >= maxConfigurations) {
-            log.warn("Maximum number of configurations reached, current count: {}", count);
-            throw new MaxConfigurationsException(String.format("Maximum number of %d configurations reached", maxConfigurations));
+            log.warn("Maximum number of active configurations reached, current count: {}", count);
+            throw new MaxConfigurationsException(String.format("Maximum number of %d active configurations reached", maxConfigurations));
         }
     }
 
@@ -72,17 +74,27 @@ public class ConfigurationService {
         }
 
         if (request.active() != null) {
+            if(Boolean.TRUE.equals(request.active()) && Boolean.FALSE.equals(configuration.getActive())){
+                validateMaxActiveConfigurations();
+            }
             configuration.setActive(request.active());
             updated = true;
         }
         return updated;
     }
 
-    public List<ConfigurationResponse> findAllConfigurations() {
-        return this.repository.findAll()
-                .stream()
-                .map(this.mapper::fromConfiguration)
-                .toList();
+    public List<ConfigurationResponse> findAllConfigurations(Boolean active) {
+        if (active != null) {
+            return this.repository.findByActive(active)
+                    .stream()
+                    .map(this.mapper::fromConfiguration)
+                    .toList();
+        }else{
+            return this.repository.findAll()
+                    .stream()
+                    .map(this.mapper::fromConfiguration)
+                    .toList();
+        }
     }
 
     public ConfigurationResponse findById(Integer configurationId) {

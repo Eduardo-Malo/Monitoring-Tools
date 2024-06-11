@@ -150,7 +150,7 @@ class ConfigurationTestIT {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody()).isEqualTo(String.format("Maximum number of %d configurations reached", maxConfigurations));
+        assertThat(response.getBody()).isEqualTo(String.format("Maximum number of %d active configurations reached", maxConfigurations));
     }
 
     @Test
