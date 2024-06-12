@@ -65,7 +65,7 @@ configurations are already in the database.
 | Spring Web               | Expose the RESTful API (manage Servlets, ...), provides Rest Client                                                                       |
 | Spring Data    	         | Integrate with JPA to enable ORM features                                                                                                 |
 | Junit \ Mockito       	  | Unit Tests, Mockito helps mock dependencies so we can test the classes in isolation                                                       |
-| Test Containers       	  | Helps the integration tests replacing the database with a test database (all integration tests can run with th edababase containers down) |
+| Test Containers       	  | Helps the integration tests replacing the database with a test database (all integration tests can run with the database containers down) |
 | Jacoco       	           | Test Coverage                                                                                                                             |
 | Docker       	           | Deploy the applications and manages the environment                                                                                       |
 | OpenAPI                  | Generate Interactive Documentation                                                                                                        |
