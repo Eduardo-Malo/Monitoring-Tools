@@ -66,6 +66,7 @@ configurations are already in the database.
 | Spring Data    	         | Integrate with JPA to enable ORM features                                                                                                 |
 | Junit \ Mockito       	  | Unit Tests, Mockito helps mock dependencies so we can test the classes in isolation                                                       |
 | Test Containers       	  | Helps the integration tests replacing the database with a test database (all integration tests can run with th edababase containers down) |
+| Jacoco       	           | Test Coverage                                                                                                                             |
 | Docker       	           | Deploy the applications and manages the environment                                                                                       |
 | OpenAPI                  | Generate Interactive Documentation                                                                                                        |
 | lombok                   | Eliminates boiler plate code                                                                                                              |
@@ -73,16 +74,16 @@ configurations are already in the database.
 **Best Practices**
 
 - Error Handling --> have been taken care with the help of the class "GlobalExceptionHandler" that helps intercept Exceptions and produce a readable error. Some return json, others string to showcase the different ways to return an error
-- Unit Tests --> Only the configuration-server has unit tests because of time constraints, not all cases are covered, but the most important are
+- Unit Tests --> Only the configuration-server has unit tests because of time constraints, not all cases are covered, but the most important are. (report in --> services\configuration\jacoco)
   ![Coverage](images/Coverage.png)
-- Integration Test --> 100% coverage only possible in a small API, report available in htmlReport\index.html
-- Dependency Injection --> very important to achieve inversion of control and among other things helps create the mock objects
+- Integration Test --> More and more important nowadays, the test pyramid is changing, and the integration tests are becoming more important.
+
+  ![Coverage](images/tests.png)
+- Dependency Injection --> very important to achieve inversion of control and among other things helps create the mock objects used in tests.
 - Automatic Documentation --> With the help of OpenApi
-
-**Things to improve**
-
-- Integration testing --> to test the database layer
-- Run the application with multiple profiles (DEV, QLD, PRD)
-- Security (Authentication, Authorization)
-- Liquibase --> to automatically create the schema and manage a more complex database
-- Many others...
+- Code Quality --> The code quality i believe is ok but could be better in a real project with the help of SonarQube, Checkstyle, code reviews, etc.
+- Functionality --> The system is working as expected, although due to time constraints some things were not implemented and some bugs that i am unaware of may exist.:
+ - On the fly configuration update (currently we need to stop the monitor-server , change the configuration and start again)
+ - Alarm system in case of a endpoint is down or response time is too high
+ - E2E tests are missing
+ - Some input validations that require database queries are missing like unique name and unique url for example. (Custom Validator) 
