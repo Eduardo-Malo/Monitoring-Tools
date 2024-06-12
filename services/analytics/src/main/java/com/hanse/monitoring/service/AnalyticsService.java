@@ -29,8 +29,16 @@ public class AnalyticsService {
         return analytics.getId();
     }
 
-    public List<AnalyticsResponse> findAllAnalytics() {
-        return this.repository.findAll()
+    public List<AnalyticsResponse> findAllAnalytics(
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            Integer responseCode,
+            Boolean result,
+            Integer jobId,
+            Double minResponseTime,
+            Double maxResponseTime
+    ) {
+        return this.repository.findAllAnalytics(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime)
                               .stream()
                               .map(this.mapper::fromAnalytics)
                               .toList();

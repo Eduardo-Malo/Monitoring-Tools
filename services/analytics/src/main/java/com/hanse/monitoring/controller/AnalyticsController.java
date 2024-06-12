@@ -2,10 +2,11 @@ package com.hanse.monitoring.controller;
 
 import com.hanse.monitoring.service.AnalyticsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,15 @@ public class AnalyticsController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AnalyticsResponse>> findAll() {
-        return ResponseEntity.ok(this.service.findAllAnalytics());
+    public ResponseEntity<List<AnalyticsResponse>> findAll(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            @RequestParam(required = false) Integer responseCode,
+            @RequestParam(required = false) Boolean result,
+            @RequestParam(required = false) Integer jobId,
+            @RequestParam(required = false) Double minResponseTime,
+            @RequestParam(required = false) Double maxResponseTime) {
+        return ResponseEntity.ok(this.service.findAllAnalytics(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime));
     }
 
     @GetMapping("/{analytics-id}")
