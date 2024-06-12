@@ -1,5 +1,6 @@
 package com.hanse.monitoring.service;
 
+import com.hanse.monitoring.controller.AnalyticsFilter;
 import com.hanse.monitoring.controller.AnalyticsMapper;
 import com.hanse.monitoring.controller.AnalyticsRequest;
 import com.hanse.monitoring.controller.AnalyticsResponse;
@@ -7,6 +8,7 @@ import com.hanse.monitoring.repository.AnalyticsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -29,19 +31,23 @@ public class AnalyticsService {
         return analytics.getId();
     }
 
-    public List<AnalyticsResponse> findAllAnalytics(
-            LocalDateTime startDate,
-            LocalDateTime endDate,
-            Integer responseCode,
-            Boolean result,
-            Integer jobId,
-            Double minResponseTime,
-            Double maxResponseTime
-    ) {
-        return this.repository.findAllAnalytics(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime)
+    public List<AnalyticsResponse> findAllAnalytics(AnalyticsFilter filter) {
+        return this.repository.findAllAnalytics(
+                           filter.startDate(),
+                           filter.endDate(),
+                           filter.responseCode(),
+                           filter.result(),
+                           filter.jobId(),
+                           filter.minResponseTime(),
+                           filter.maxResponseTime(),
+                           Sort.by(getSortDirection(filter.sort()[1]), filter.sort()[0]))
                               .stream()
                               .map(this.mapper::fromAnalytics)
                               .toList();
+    }
+
+    private Sort.Direction getSortDirection(String sort) {
+        return sort.endsWith("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
     public AnalyticsResponse findById(Integer analyticsId) {

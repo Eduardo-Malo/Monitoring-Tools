@@ -1,6 +1,7 @@
 package com.hanse.monitoring.repository;
 
 import com.hanse.monitoring.domain.Analytics;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,8 +25,8 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Integer> {
             @Param("result") Boolean result,
             @Param("jobId") Integer jobId,
             @Param("minResponseTime") Double minResponseTime,
-            @Param("maxResponseTime") Double maxResponseTime
-
+            @Param("maxResponseTime") Double maxResponseTime,
+            Sort sort
     );
 
 }

@@ -1,5 +1,6 @@
 package com.hanse.monitoring.controller;
 
+import com.hanse.monitoring.domain.Analytics;
 import com.hanse.monitoring.service.AnalyticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -31,8 +32,10 @@ public class AnalyticsController {
             @RequestParam(required = false) Boolean result,
             @RequestParam(required = false) Integer jobId,
             @RequestParam(required = false) Double minResponseTime,
-            @RequestParam(required = false) Double maxResponseTime) {
-        return ResponseEntity.ok(this.service.findAllAnalytics(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime));
+            @RequestParam(required = false) Double maxResponseTime,
+            @RequestParam(required = false, defaultValue = "createdAt,desc") String[] sort){
+        AnalyticsFilter filter = new AnalyticsFilter(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime, sort);
+        return ResponseEntity.ok(this.service.findAllAnalytics(filter));
     }
 
     @GetMapping("/{analytics-id}")
