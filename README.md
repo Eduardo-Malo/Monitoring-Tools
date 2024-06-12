@@ -58,13 +58,31 @@ configurations are already in the database.
 
 **Technology Stack**
 
-| **Technology**        	  | **Motive**			                                                                                  |
-|--------------------------|------------------------------------------------------------------------------------------------|
-| Spring Boot            	 | Helps manage Spring dependencies and have an embebed container to run the RESTfu API endpoints |
-| Spring Core    	         | Dependency Injection                                                                           |
-| Spring Web               | Expose the RESTful API (manage Servlets, ...), provides Rest Client                            |
-| Spring Data    	         | Integrate with JPA to enable ORM features                                                      |
-| Junit \ Mockito       	  | Unit Tests, Mockito helps mock dependencies so we can only test a a specific class             |
-| Test Containers       	  | Helps the integration tests replacing the database with a test database                        |
-| OpenAPI                  | Generate Interactive Documentation                                                             |
-| lombok                   | Eliminates border plate code                                                                   |
+| **Technology**        	  | **Motive**			                                                                                                                             |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Spring Boot            	 | Helps manage Spring dependencies and have an embebed container to run the RESTfu API endpoints                                            |
+| Spring Core    	         | Dependency Injection                                                                                                                      |
+| Spring Web               | Expose the RESTful API (manage Servlets, ...), provides Rest Client                                                                       |
+| Spring Data    	         | Integrate with JPA to enable ORM features                                                                                                 |
+| Junit \ Mockito       	  | Unit Tests, Mockito helps mock dependencies so we can test the classes in isolation                                                       |
+| Test Containers       	  | Helps the integration tests replacing the database with a test database (all integration tests can run with th edababase containers down) |
+| Docker       	           | Deploy the applications and manages the environment                                                                                       |
+| OpenAPI                  | Generate Interactive Documentation                                                                                                        |
+| lombok                   | Eliminates boiler plate code                                                                                                              |
+
+**Best Practices**
+
+- Error Handling --> have been taken care with the help of the class "GlobalExceptionHandler" that helps intercept Exceptions and produce a readable error. Some return json, others string to showcase the different ways to return an error
+- Unit Tests --> Only the configuration-server has unit tests because of time constraints, not all cases are covered, but the most important are
+  ![Coverage](images/Coverage.png)
+- Integration Test --> 100% coverage only possible in a small API, report available in htmlReport\index.html
+- Dependency Injection --> very important to achieve inversion of control and among other things helps create the mock objects
+- Automatic Documentation --> With the help of OpenApi
+
+**Things to improve**
+
+- Integration testing --> to test the database layer
+- Run the application with multiple profiles (DEV, QLD, PRD)
+- Security (Authentication, Authorization)
+- Liquibase --> to automatically create the schema and manage a more complex database
+- Many others...

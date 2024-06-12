@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">configuration</a> &gt; <a href="index.source.html" class="el_package">com.hanse.monitoring.controller</a> &gt; <span class="el_source">ConfigurationRequest.java</span></div><h1>ConfigurationRequest.java</h1><pre class="source lang-java linenums">package com.hanse.monitoring.controller;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+<span class="fc" id="L11">public record ConfigurationRequest(</span>
+        @NotNull(message = &quot;name should be present&quot;, groups = OnCreate.class)
+        @NotEmpty(message = &quot;name should be present&quot;, groups = OnCreate.class)
+        @NotBlank(message = &quot;name should be present&quot;, groups = OnCreate.class)
+        String name,
+        @NotNull(message = &quot;uri should be present&quot;, groups = OnCreate.class)
+        @NotEmpty(message = &quot;uri should be present&quot;, groups = OnCreate.class)
+        @NotBlank(message = &quot;uri should be present&quot;, groups = OnCreate.class)
+        String uri,
+        @NotNull(message = &quot;interval should be present&quot;, groups = OnCreate.class)
+        @Min(groups = {OnCreate.class, OnUpdate.class}, value = 0)
+        @Max(groups = {OnCreate.class, OnUpdate.class}, value = 86400)
+        Integer interval,
+        Boolean active
+) {
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

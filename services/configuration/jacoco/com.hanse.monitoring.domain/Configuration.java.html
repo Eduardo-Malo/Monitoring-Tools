@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Configuration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">configuration</a> &gt; <a href="index.source.html" class="el_package">com.hanse.monitoring.domain</a> &gt; <span class="el_source">Configuration.java</span></div><h1>Configuration.java</h1><pre class="source lang-java linenums">package com.hanse.monitoring.domain;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.*;
+import java.time.LocalDateTime;
+
+<span class="fc" id="L16">@AllArgsConstructor</span>
+<span class="fc" id="L17">@NoArgsConstructor</span>
+<span class="pc" id="L18">@Builder</span>
+@Getter
+<span class="fc" id="L20">@Setter</span>
+@Entity
+@Table(name = &quot;configuration&quot;)
+public class Configuration {
+
+    @Id
+    @GeneratedValue
+<span class="fc" id="L27">    private Integer id;</span>
+    @Column(unique = true)
+    @NotEmpty(message = &quot;name should be present&quot;)
+<span class="fc" id="L30">    private String name;</span>
+    @Column(unique = true)
+    @NotEmpty(message = &quot;uri should be present&quot;)
+<span class="fc" id="L33">    private String uri;</span>
+    @NotNull(message = &quot;interval should be present&quot;)
+    @Min(value = 0)
+    @Max(value = 86400)
+<span class="fc" id="L37">    private Integer interval;</span>
+    @Column(columnDefinition = &quot;BOOLEAN DEFAULT true&quot;)
+<span class="fc" id="L39">    private Boolean active;</span>
+    @PastOrPresent
+    @NotNull(message = &quot;createdAt should be present&quot;)
+<span class="nc" id="L42">    private LocalDateTime createdAt;</span>
+    @PastOrPresent
+<span class="nc" id="L44">    private LocalDateTime modifiedAt;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

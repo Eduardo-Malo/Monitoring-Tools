@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">configuration</a> &gt; <a href="index.source.html" class="el_package">com.hanse.monitoring.controller</a> &gt; <span class="el_source">ConfigurationMapper.java</span></div><h1>ConfigurationMapper.java</h1><pre class="source lang-java linenums">package com.hanse.monitoring.controller;
+
+import com.hanse.monitoring.domain.Configuration;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="fc" id="L7">public class ConfigurationMapper {</span>
+
+    /**
+     * Converts a ConfigurationRequest to a Configuration entity.
+     *
+     * @param request the ConfigurationRequest to convert
+     * @return the converted Configuration entity
+     */
+    public Configuration toConfiguration(ConfigurationRequest request) {
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (request == null) {</span>
+<span class="fc" id="L17">            return null;</span>
+        }
+<span class="fc" id="L19">        return Configuration.builder()</span>
+<span class="fc" id="L20">                            .name(request.name())</span>
+<span class="fc" id="L21">                            .uri(request.uri())</span>
+<span class="fc" id="L22">                            .interval(request.interval())</span>
+<span class="pc bpc" id="L23" title="2 of 4 branches missed.">                            .active(request.active() == null || request.active())</span>
+<span class="fc" id="L24">                            .build();</span>
+    }
+
+    /**
+     * Converts a Configuration entity to a ConfigurationResponse.
+     *
+     * @param configuration the Configuration entity to convert
+     * @return the converted ConfigurationResponse
+     */
+    public ConfigurationResponse fromConfiguration(Configuration configuration) {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (configuration == null) {</span>
+<span class="fc" id="L35">            return null;</span>
+        }
+<span class="fc" id="L37">        return new ConfigurationResponse(</span>
+<span class="fc" id="L38">                configuration.getId(),</span>
+<span class="fc" id="L39">                configuration.getName(),</span>
+<span class="fc" id="L40">                configuration.getUri(),</span>
+<span class="fc" id="L41">                configuration.getInterval(),</span>
+<span class="fc" id="L42">                configuration.getActive()</span>
+        );
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

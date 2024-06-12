@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">configuration</a> &gt; <a href="index.source.html" class="el_package">com.hanse.monitoring.handler</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.hanse.monitoring.handler;
+
+import com.hanse.monitoring.exception.MaxConfigurationsException;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.time.LocalTime.now;
+
+@RestControllerAdvice
+<span class="fc" id="L19">public class GlobalExceptionHandler {</span>
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity&lt;ErrorResponse&gt; handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+<span class="fc" id="L24">        var errors = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L25">        ex.getBindingResult().getAllErrors()</span>
+<span class="fc" id="L26">           .forEach(error -&gt; {</span>
+<span class="fc" id="L27">               var fieldName = ((FieldError) error).getField();</span>
+<span class="fc" id="L28">               var errorMessage = error.getDefaultMessage();</span>
+<span class="fc" id="L29">               errors.put(fieldName, errorMessage);</span>
+<span class="fc" id="L30">           });</span>
+
+<span class="fc" id="L32">        return ResponseEntity</span>
+<span class="fc" id="L33">                .status(HttpStatus.BAD_REQUEST)</span>
+<span class="fc" id="L34">                .body(new ErrorResponse(errors));</span>
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleEntityNotFoundException(EntityNotFoundException ex) {
+<span class="fc" id="L40">        Map&lt;String, String&gt; response = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L41">        response.put(&quot;message&quot;, ex.getMessage());</span>
+<span class="fc" id="L42">        response.put(&quot;timestamp&quot;, now().toString());</span>
+<span class="fc" id="L43">        return ResponseEntity.status(HttpStatus.NOT_FOUND).contentType(MediaType.APPLICATION_JSON).body(response);</span>
+    }
+
+    @ExceptionHandler(MaxConfigurationsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity&lt;String&gt; handleMaxConfigurations(MaxConfigurationsException ex) {
+<span class="fc" id="L49">        return ResponseEntity</span>
+<span class="fc" id="L50">                .status(HttpStatus.CONFLICT)</span>
+<span class="fc" id="L51">                .contentType(MediaType.TEXT_PLAIN)</span>
+<span class="fc" id="L52">                .body(ex.getMsg());</span>
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity&lt;String&gt; handleDefault(Exception ex) {
+<span class="fc" id="L58">        return ResponseEntity</span>
+<span class="fc" id="L59">                .status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="fc" id="L60">                .contentType(MediaType.TEXT_PLAIN)</span>
+<span class="fc" id="L61">                .body(ex.getMessage());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
