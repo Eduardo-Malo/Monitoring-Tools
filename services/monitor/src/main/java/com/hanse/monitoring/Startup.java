@@ -39,53 +39,62 @@ public class Startup implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         log.info("Monitoring started.");
-        this.executorService = Executors.newScheduledThreadPool(maxConfigurations);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            shutdown();
-            try {
-                if (!executorService.awaitTermination(10, TimeUnit.SECONDS)) {
-                    shutdown();
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-           log.info("Shutting down the application...");
-        }));
-
-
-        configurationHttpClient.listConfigurations(true).forEach(this::launchJob);
+        this.executorService = Executors.newScheduledThreadPool(maxConfigurations, Thread.ofVirtual().factory());
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+        configurationHttpClient.listConfigurations(true).forEach(this::scheduleJob);
     }
 
-    public void launchJob(Configuration configuration) {
+    private void scheduleJob(Configuration configuration) {
         Runnable jobTask = () -> {
             log.info("Launching job for configuration: {}", configuration);
-            long startTime = System.currentTimeMillis();
-            try {
-                ResponseEntity<String> monitoringResponse = monitorClient.get().uri(configuration.uri()).retrieve().toEntity(String.class);
-                long endTime = System.currentTimeMillis();
-                double responseTimeSeconds = ((endTime - startTime) / 1000.0);
-                HttpStatusCode statusCode = monitoringResponse.getStatusCode();
-                analyticsHttpClient.insertAnalytics(new Analytics(configuration.id(), configuration.name(), configuration.uri(), statusCode.isError() ? statusCode.toString() : "", responseTimeSeconds, !statusCode.isError(), statusCode.value()));
-            } catch (Exception e) {
-                long endTime = System.currentTimeMillis();
-                double responseTimeSeconds = ((endTime - startTime) / 1000.0);
-                log.error("Error occurred while retrieving monitoring data: {}", e.getMessage());
-                analyticsHttpClient.insertAnalytics(new Analytics(configuration.id(), configuration.name(), configuration.uri(), e.getMessage(), responseTimeSeconds, false, 0));
-            }
+            executeJob(configuration);
         };
-
-        scheduledFutures.add(executorService.scheduleAtFixedRate(
+        ScheduledFuture<?> future = executorService.scheduleAtFixedRate(
                 jobTask,
-                0,
+                configuration.interval(),
                 configuration.interval(),
                 TimeUnit.SECONDS
-        ));
+        );
+        scheduledFutures.add(future);
+    }
+
+    public void executeJob(Configuration configuration) {
+        long startTime = System.currentTimeMillis();
+        try {
+            ResponseEntity<String> monitoringResponse = monitorClient.get()
+                                                                     .uri(configuration.uri())
+                                                                     .retrieve()
+                                                                     .toEntity(String.class);
+            long endTime = System.currentTimeMillis();
+            double responseTimeSeconds = ((endTime - startTime) / 1000.0);
+            HttpStatusCode statusCode = monitoringResponse.getStatusCode();
+            analyticsHttpClient.insertAnalytics(new Analytics(configuration.id(), configuration.name(), configuration.uri(), statusCode.isError() ? statusCode.toString() : "", responseTimeSeconds, !statusCode.isError(), statusCode.value()));
+        } catch (Exception e) {
+            handleException(configuration, startTime, e);
+        }
+    }
+
+    private void handleException(Configuration configuration, long startTime, Exception e) {
+        long endTime = System.currentTimeMillis();
+        double responseTimeSeconds = ((endTime - startTime) / 1000.0);
+        log.error("Error occurred while retrieving monitoring data for configuration {}: {}", configuration, e.getMessage());
+        analyticsHttpClient.insertAnalytics(new Analytics(configuration.id(), configuration.name(), configuration.uri(), e.getMessage(), responseTimeSeconds, false, 0));
     }
 
     public void shutdown() {
-        log.info("Gracefully shutting down the threads...");
-        executorService.shutdown();
+        log.info("Shutting down the application...");
+        this.executorService.shutdown();
+        try {
+            if (!this.executorService.awaitTermination(10, TimeUnit.SECONDS)) {
+                log.error("Executor service did not terminate gracefully within 10 seconds.");
+                List<Runnable> droppedTasks = this.executorService.shutdownNow();
+                log.error("Executor service forcibly terminated. Dropped tasks: {}", droppedTasks.size());
+            }
+        } catch (InterruptedException e) {
+            log.error("Interrupted while awaiting termination of executor service: {}", e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
 }

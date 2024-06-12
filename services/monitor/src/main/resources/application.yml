@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: monitoring-tools-monitor
+  threads:
+    virtual:
+      enabled: true
 
 client:
   url:
