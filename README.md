@@ -2,7 +2,7 @@
 
 System supported by a set of microservices that work together to monitor online endpoints.
 The system should be able to check the status of a group of pre configured endpoints, 
-store the results in a database, and provide a way to retrieve the results.
+store the results in a database and provide a way to retrieve the results.
 
 ## Build/Installation 
 
@@ -47,7 +47,7 @@ configurations are already in the database.
 
 - **Test with OpenApi**
 
-  Open the following urls (both applications need be up) in your favourite browser and use the interface to test the RESTful API
+  Open the following urls (both applications need to be up) in your favourite browser and use the interface to test the RESTful API
 
         http://localhost:8070/swagger-ui/index.html
         http://localhost:8071/swagger-ui/index.html
