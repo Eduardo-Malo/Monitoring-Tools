@@ -6,7 +6,7 @@ spring:
     name: monitoring-tools-configuration
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/configuration?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
+    url: jdbc:postgresql://localhost:5434/configuration?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
