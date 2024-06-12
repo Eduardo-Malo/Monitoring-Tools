@@ -16,6 +16,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
     networks:
       - monitoring-tools-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8070/health" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
   analytics-server:
     build:
       context: ./services/analytics
@@ -33,6 +39,36 @@ services:
       SPRING_DATASOURCE_PASSWORD: admin
     networks:
       - monitoring-tools-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8071/health" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  monitor-server:
+    build:
+      context: ./services/monitor
+      dockerfile: Dockerfile
+    ports:
+      - "8072:8072"
+    restart: always
+    depends_on:
+      - configuration-server
+      - analytics-server
+    links:
+      - configuration-server
+      - analytics-server
+    environment:
+      CLIENT_URL_CONFIGURATION-SERVER: http://configuration-server:8070/api/v1
+      CLIENT_URL_ANALYTICS-SERVER: http://analytics-server:8071/api/v1
+    networks:
+      - monitoring-tools-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8072/health" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
   configuration_db:
     container_name: postgres_configuration_container
     image: postgres
