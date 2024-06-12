@@ -8,7 +8,6 @@ import com.hanse.monitoring.repository.AnalyticsRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -40,14 +39,10 @@ public class AnalyticsService {
                            filter.jobId(),
                            filter.minResponseTime(),
                            filter.maxResponseTime(),
-                           Sort.by(getSortDirection(filter.sort()[1]), filter.sort()[0]))
+                           filter.page())
                               .stream()
                               .map(this.mapper::fromAnalytics)
                               .toList();
-    }
-
-    private Sort.Direction getSortDirection(String sort) {
-        return sort.endsWith("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
     }
 
     public AnalyticsResponse findById(Integer analyticsId) {

@@ -1,8 +1,10 @@
 package com.hanse.monitoring.controller;
 
-import com.hanse.monitoring.domain.Analytics;
 import com.hanse.monitoring.service.AnalyticsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,8 +35,8 @@ public class AnalyticsController {
             @RequestParam(required = false) Integer jobId,
             @RequestParam(required = false) Double minResponseTime,
             @RequestParam(required = false) Double maxResponseTime,
-            @RequestParam(required = false, defaultValue = "createdAt,desc") String[] sort){
-        AnalyticsFilter filter = new AnalyticsFilter(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime, sort);
+            @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable page){
+        AnalyticsFilter filter = new AnalyticsFilter(startDate, endDate, responseCode, result, jobId, minResponseTime, maxResponseTime, page);
         return ResponseEntity.ok(this.service.findAllAnalytics(filter));
     }
 

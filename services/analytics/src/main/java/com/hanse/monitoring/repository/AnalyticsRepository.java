@@ -1,12 +1,12 @@
 package com.hanse.monitoring.repository;
 
 import com.hanse.monitoring.domain.Analytics;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface AnalyticsRepository extends JpaRepository<Analytics, Integer> {
 
@@ -18,7 +18,7 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Integer> {
             "( :jobId IS NULL OR a.jobId = :jobId ) AND " +
             "( :minResponseTime IS NULL OR a.responseTime >= :minResponseTime ) AND " +
             "( :maxResponseTime IS NULL OR a.responseTime <= :maxResponseTime )")
-    List<Analytics> findAllAnalytics(
+    Page<Analytics> findAllAnalytics(
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate,
             @Param("responseCode") Integer responseCode,
@@ -26,7 +26,7 @@ public interface AnalyticsRepository extends JpaRepository<Analytics, Integer> {
             @Param("jobId") Integer jobId,
             @Param("minResponseTime") Double minResponseTime,
             @Param("maxResponseTime") Double maxResponseTime,
-            Sort sort
+            Pageable pageable
     );
 
 }

@@ -1,8 +1,7 @@
 package com.hanse.monitoring.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +14,7 @@ public record AnalyticsFilter(
         Integer jobId,
         Double minResponseTime,
         Double maxResponseTime,
-        String[] sort
+        Pageable page
 ) {
 }
 
