@@ -59,6 +59,7 @@ class ConfigurationTestIT {
 
     @BeforeEach
     public void setUp() {
+        jdbcTemplate.update("DELETE FROM configuration");
         restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         request = new ConfigurationRequest("name", "uri", 1, true);
         ResponseEntity<Integer> response = restTemplate.postForEntity(getRootUrl(), new ConfigurationRequest("name1", "uri1", 1, true), Integer.class);

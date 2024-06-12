@@ -55,3 +55,16 @@ configurations are already in the database.
 ## Architecture
 
 ![Architecture](images/Architecture.png)
+
+**Technology Stack**
+
+| **Technology**        	  | **Motive**			                                                                                  |
+|--------------------------|------------------------------------------------------------------------------------------------|
+| Spring Boot            	 | Helps manage Spring dependencies and have an embebed container to run the RESTfu API endpoints |
+| Spring Core    	         | Dependency Injection                                                                           |
+| Spring Web               | Expose the RESTful API (manage Servlets, ...), provides Rest Client                            |
+| Spring Data    	         | Integrate with JPA to enable ORM features                                                      |
+| Junit \ Mockito       	  | Unit Tests, Mockito helps mock dependencies so we can only test a a specific class             |
+| Test Containers       	  | Helps the integration tests replacing the database with a test database                        |
+| OpenAPI                  | Generate Interactive Documentation                                                             |
+| lombok                   | Eliminates border plate code                                                                   |
