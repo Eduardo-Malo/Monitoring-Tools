@@ -1,0 +1,454 @@
+{
+	"info": {
+		"_postman_id": "52d3e8b5-a470-46a2-9b7a-1790b2cb39be",
+		"name": "Monitoring_Tools",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7857188",
+		"_collection_link": "https://universal-satellite-26543.postman.co/workspace/Retarus~e54fdab7-c44b-40cf-9665-bcda38927809/collection/7857188-52d3e8b5-a470-46a2-9b7a-1790b2cb39be?action=share&source=collection_link&creator=7857188"
+	},
+	"item": [
+		{
+			"name": "configuration",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8070/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertConfigurations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"config2\",\r\n  \"uri\": \"http://localhost:8070/api/v1/configurations\",\r\n  \"interval\": 3,\r\n  \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListConfigurations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListConfigurationsEnabled",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations?active=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListConfiguration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateConfigurations",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"interval\": 5,\r\n  \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteConfigurations",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8070/api/v1/configurations/52",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8070",
+							"path": [
+								"api",
+								"v1",
+								"configurations",
+								"52"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "analytics",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertAnalytics",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"jobId\": 2,\r\n  \"jobName\": \"testApi2\",\r\n  \"uri\": \"uri1\",\r\n  \"errorMessage\": \"\",\r\n  \"responseTime\": 1.241,\r\n  \"result\": true,\r\n  \"responseCode\": 201\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAnalytics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAnalyticsSortPagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics?sort=createdAt,asc&size=10&page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "createdAt,asc"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAnalyticsFilter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics?startDate=2023-06-13T10:29:29&endDate=2024-07-13T10:29:29&result=true&jobId=2&responseCode=201&minResponseTime=1.1&maxResponseTime=1.3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2023-06-13T10:29:29"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-07-13T10:29:29"
+								},
+								{
+									"key": "result",
+									"value": "true"
+								},
+								{
+									"key": "jobId",
+									"value": "2"
+								},
+								{
+									"key": "responseCode",
+									"value": "201"
+								},
+								{
+									"key": "minResponseTime",
+									"value": "1.1"
+								},
+								{
+									"key": "maxResponseTime",
+									"value": "1.3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAnalyticsFilter Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics?startDate=2023-06-13T10:29:29&endDate=2024-07-13T10:29:29&result=true&jobId=1&minResponseTime=0&maxResponseTime=0.13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2023-06-13T10:29:29"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-07-13T10:29:29"
+								},
+								{
+									"key": "result",
+									"value": "true"
+								},
+								{
+									"key": "jobId",
+									"value": "1"
+								},
+								{
+									"key": "minResponseTime",
+									"value": "0"
+								},
+								{
+									"key": "maxResponseTime",
+									"value": "0.13"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAnalytic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8071/api/v1/analytics/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8071",
+							"path": [
+								"api",
+								"v1",
+								"analytics",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "monitor",
+			"item": [
+				{
+					"name": "Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8072/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8072",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
