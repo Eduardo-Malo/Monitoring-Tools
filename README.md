@@ -82,8 +82,8 @@ configurations are already in the database.
 - Dependency Injection --> very important to achieve inversion of control and among other things helps create the mock objects used in tests.
 - Automatic Documentation --> With the help of OpenApi
 - Code Quality --> The code quality i believe is ok but could be better in a real project with the help of SonarQube, Checkstyle, code reviews, etc.
-- Functionality --> The system is working as expected, although due to time constraints some things were not implemented and some bugs that i am unaware of may exist.:
- - On the fly configuration update (currently we need to stop the monitor-server , change the configuration and start again)
- - Alarm system in case of a endpoint is down or response time is too high
- - E2E tests are missing
- - Some input validations that require database queries are missing like unique name and unique url for example. (Custom Validator) 
+- Functionality --> The system is working as expected, although due to time constraints some improvements were not implemented and some bugs that i am unaware of may exist.:
+  - On the fly configuration update (currently we need to stop the monitor-server , change the configuration and start again)
+  - Alarm system in case of a endpoint is down or response time is too high
+  - E2E tests are missing
+  - Some input validations that require database queries are missing like unique name and unique url for example. (Custom Validator) 
